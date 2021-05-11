@@ -88,7 +88,36 @@ def depthFirstSearch(problem):
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    #util.raiseNotDefined()
+
+    startNode = problem.getStartState()
+    visited = set()
+    # não sei o que chamar a isto, mas é suposto ser o resultado das pesquisas
+    tree = list()
+    # In case of start node is our goal, there is no actions to perform
+    if problem.isGoalState(startNode):
+        return []
+
+    tree.append((startNode, list()))
+
+    while not tree == []:
+        currentNode, actions = tree[-1] # returns the last element of list
+        tree.pop() # removes the last element of list because DFS implements LIFO
+        if currentNode not in visited:
+
+            if problem.isGoalState(currentNode):
+                return actions
+            
+            visited.add(currentNode)
+
+            print(problem.getSuccessors(currentNode))
+            for successorNode, action, cost in problem.getSuccessors(currentNode):
+                # confirmar se no dfs ele tem em consideração os nós previamente visitados ou não
+                if successorNode not in visited:
+                    nextAction = actions.copy()
+                    nextAction.append(action)
+                    tree.append((successorNode, nextAction))
+
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
