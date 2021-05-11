@@ -91,32 +91,27 @@ def depthFirstSearch(problem):
     #util.raiseNotDefined()
 
     startNode = problem.getStartState()
-    visited = set()
-    # não sei o que chamar a isto, mas é suposto ser o resultado das pesquisas
-    tree = list()
-    # In case of start node is our goal, there is no actions to perform
-    if problem.isGoalState(startNode):
-        return []
+    visited = set() # set of visited nodes
+    explored = set()    # set of explored nodes
 
-    tree.append((startNode, list()))
+    structure = util.Stack()
 
-    while not tree == []:
-        currentNode, actions = tree[-1] # returns the last element of list
-        tree.pop() # removes the last element of list because DFS implements LIFO
+    structure.push((startNode, list()))
+    
+    while not structure.isEmpty():
+        currentNode, actions = structure.pop() # returns the last element of list
         if currentNode not in visited:
-
-            if problem.isGoalState(currentNode):
+            if problem.isGoalState(currentNode): # In case of start node is our goal, there is no actions to perform
                 return actions
             
             visited.add(currentNode)
 
-            print(problem.getSuccessors(currentNode))
             for successorNode, action, cost in problem.getSuccessors(currentNode):
-                # confirmar se no dfs ele tem em consideração os nós previamente visitados ou não
-                if successorNode not in visited:
+                if successorNode not in visited or successorNode not in explored:
+                    explored.add(successorNode) # add sucessorNode to explored
                     nextAction = actions.copy()
                     nextAction.append(action)
-                    tree.append((successorNode, nextAction))
+                    structure.push((successorNode, nextAction)) # add the list of actions to achieve the goal
 
 
 def breadthFirstSearch(problem):
