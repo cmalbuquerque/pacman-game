@@ -94,14 +94,16 @@ def depthFirstSearch(problem):
     visited = set() # set of visited nodes
     explored = set()    # set of explored nodes
 
-    structure = util.Stack()
 
+    structure = util.Stack() # stack because use LIFO implementation
+
+    # (Node, list of actions until to the node)
     structure.push((startNode, list()))
     
     while not structure.isEmpty():
         currentNode, actions = structure.pop() # returns the last element of list
         if currentNode not in visited:
-            if problem.isGoalState(currentNode): # In case of start node is our goal, there is no actions to perform
+            if problem.isGoalState(currentNode): # in case of start node is our goal, there is no actions to perform
                 return actions
             
             visited.add(currentNode)
