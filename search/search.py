@@ -75,8 +75,7 @@ def tinyMazeSearch(problem):
 
 def depthFirstSearch(problem):
     startNode = problem.getStartState()
-    visited = set() # set of visited nodes
-    explored = set()    # set of explored nodes
+    explored = set() # set of explored nodes
 
     structure = util.Stack() # stack because use LIFO implementation
 
@@ -84,22 +83,22 @@ def depthFirstSearch(problem):
     structure.push((startNode, list()))
     
     while not structure.isEmpty():
-        currentNode, actions = structure.pop() # returns the last element of list
-        if currentNode not in visited:
-            if problem.isGoalState(currentNode): # returns actions if is the goal
-                return actions
+        currentNode, actions = structure.pop() # returns the last element of lis
+
+        if problem.isGoalState(currentNode): # returns actions if is the goal
+            return actions
             
-            visited.add(currentNode)
+        if currentNode not in explored:
+            explored.add(currentNode)
 
             for successorNode, action, cost in problem.getSuccessors(currentNode):
-                if successorNode not in visited or successorNode not in explored:
-                    explored.add(successorNode) # add sucessorNode to explored
+                if successorNode not in explored:
                     # copy actions list and append the new action to achieve the goal
                     nextAction = actions.copy() 
                     nextAction.append(action) 
                     # add the list of actions to achieve the current node
-                    structure.push((successorNode, nextAction)) 
-
+                    structure.push((successorNode, nextAction))
+    return list()
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
