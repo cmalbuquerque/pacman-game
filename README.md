@@ -1,4 +1,4 @@
-# Pacman Game
+# 👾 🕹 Pacman Game
 Resolution of Pacman game in Python using AI approaches in order to allow the Pacman agent find paths through his maze world, both to reach a particular location and to collect food efficiently. This project is divided into steps to built general search algorithms and apply them to Pacman scenarios.
 
 ## Steps
