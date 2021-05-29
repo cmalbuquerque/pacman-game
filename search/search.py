@@ -102,13 +102,66 @@ def depthFirstSearch(problem):
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    startNode = problem.getStartState()
+    explored = set() # set of explored nodes
+
+    structure = util.Queue() # queue because use FIFO implementation
+
+    # (Node, list of actions until to achieve the node)
+    structure.push((startNode, list()))
+    
+    while not structure.isEmpty():
+        currentNode, actions = structure.pop() # returns the last element of lis
+
+        if problem.isGoalState(currentNode): # returns actions if is the goal
+            return actions
+            
+        if currentNode not in explored:
+            explored.add(currentNode)
+
+            for successorNode, action, cost in problem.getSuccessors(currentNode):
+                print((action, cost))
+                if successorNode not in explored:
+                    # copy actions list and append the new action to achieve the goal
+                    nextAction = actions.copy() 
+                    nextAction.append(action) 
+                    # add the list of actions to achieve the current node
+                    structure.push((successorNode, nextAction))
+    return list()
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    startNode = problem.getStartState()
+    explored = set() # set of explored nodes
+
+    structure = util.PriorityQueue() # queue because use FIFO implementation
+
+    # (Node, list of actions until to achieve the node)
+    structure.push((startNode, list()), 0)
+    
+    while not structure.isEmpty():
+        currentNode, actions = structure.pop() # returns the last element of lis
+
+        if problem.isGoalState(currentNode): # returns actions if is the goal
+            return actions
+            
+        if currentNode not in explored:
+            explored.add(currentNode)
+
+            for successorNode, action, cost in problem.getSuccessors(currentNode):
+                #if successorNode not in explored:
+                    # copy actions list and append the new action to achieve the goal
+                    nextAction = actions.copy() 
+                    nextAction.append(action)
+                    pathCost = problem.getCostOfActions(nextAction)
+                    # add the list of actions to achieve the current node
+                    structure.update((successorNode, nextAction), pathCost)
+                #elif successorNode in explored:
+                #    structure.update((successorNode, nextAction))
+                    
+    return list()
 
 def nullHeuristic(state, problem=None):
     """
