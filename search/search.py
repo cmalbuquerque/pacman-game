@@ -73,65 +73,46 @@ def tinyMazeSearch(problem):
     w = Directions.WEST
     return  [s, s, w, s, w, w, s, w]
 
-def depthFirstSearch(problem):
+def genericSearch(problem, structure):
     startNode = problem.getStartState()
     explored = set() # set of explored nodes
+
+    # (Node, list of actions until to achieve the node)
+    structure.push((startNode, list()))
+    
+    while not structure.isEmpty():
+        currentNode, actions = structure.pop() # returns the last element of lis
+
+        if problem.isGoalState(currentNode): # returns actions if is the goal
+            return actions
+            
+        if currentNode not in explored:
+            explored.add(currentNode)
+
+            for successorNode, action, cost in problem.getSuccessors(currentNode):
+                if successorNode not in explored:
+                    # copy actions list and append the new action to achieve the goal
+                    nextAction = actions.copy() 
+                    nextAction.append(action) 
+                    # add the list of actions to achieve the current node
+                    structure.push((successorNode, nextAction))
+    return list()
+
+def depthFirstSearch(problem):
 
     structure = util.Stack() # stack because use LIFO implementation
 
-    # (Node, list of actions until to achieve the node)
-    structure.push((startNode, list()))
-    
-    while not structure.isEmpty():
-        currentNode, actions = structure.pop() # returns the last element of lis
+    return genericSearch(problem, structure)
 
-        if problem.isGoalState(currentNode): # returns actions if is the goal
-            return actions
-            
-        if currentNode not in explored:
-            explored.add(currentNode)
 
-            for successorNode, action, cost in problem.getSuccessors(currentNode):
-                if successorNode not in explored:
-                    # copy actions list and append the new action to achieve the goal
-                    nextAction = actions.copy() 
-                    nextAction.append(action) 
-                    # add the list of actions to achieve the current node
-                    structure.push((successorNode, nextAction))
-    return list()
 
 def breadthFirstSearch(problem):
-    """Search the shallowest nodes in the search tree first."""
-
-    startNode = problem.getStartState()
-    explored = set() # set of explored nodes
 
     structure = util.Queue() # queue because use FIFO implementation
 
-    # (Node, list of actions until to achieve the node)
-    structure.push((startNode, list()))
-    
-    while not structure.isEmpty():
-        currentNode, actions = structure.pop() # returns the last element of lis
-
-        if problem.isGoalState(currentNode): # returns actions if is the goal
-            return actions
-            
-        if currentNode not in explored:
-            explored.add(currentNode)
-
-            for successorNode, action, cost in problem.getSuccessors(currentNode):
-                print((action, cost))
-                if successorNode not in explored:
-                    # copy actions list and append the new action to achieve the goal
-                    nextAction = actions.copy() 
-                    nextAction.append(action) 
-                    # add the list of actions to achieve the current node
-                    structure.push((successorNode, nextAction))
-    return list()
+    return genericSearch(problem, structure)
 
 def uniformCostSearch(problem):
-    """Search the node of least total cost first."""
 
     startNode = problem.getStartState()
     explored = set() # set of explored nodes
