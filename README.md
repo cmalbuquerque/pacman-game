@@ -1,24 +1,27 @@
-# 👾 🕹 Pacman Game
+# 👻 🕹 Pacman Game
+
 Resolution of Pacman game in Python using AI approaches in order to allow the Pacman agent find paths through his maze world, both to reach a particular location and to collect food efficiently. This project is divided into steps to built general search algorithms and apply them to Pacman scenarios.
 
 ## Steps
 
-1. Finding a Fixed Food Dot using Depth First Search
-2. Breadth First Search
-3. Uniform Cost Search
-4. A* search
-5. Finding All the Corners
-6. Corners Problem: Heuristic
-7. Eating All The Dots
-8. Suboptimal Search
+1. [X] Finding a Fixed Food Dot using Depth First Search
+2. [X] Breadth First Search
+3. [X] Uniform Cost Search
+4. [ ] A* search
+5. [ ] Finding All the Corners
+6. [ ] Corners Problem: Heuristic
+7. [ ] Eating All The Dots
+7. [ ] Suboptimal Search
 
 ## Structure
 
 All project code can be found on [search directory](/search) and the respective reports of steps implementation are available on [reports directory](/reports).
 
 ### Relevant Files
-|  |  |
-|--|--|
+
+
+|   |   |
+| - | - |
 | **search.py** | Where all of implemented search algorithms will reside (file to edit) |
 | **searchAgents.py** | Where all of implemented search-based agents will reside (file to edit) |
 | **pacman.py** | The main file that runs Pacman games. This file describes a Pacman GameState type, which you use in this project |
@@ -26,8 +29,7 @@ All project code can be found on [search directory](/search) and the respective 
 | **util.py** | Useful data structures for implementing search algorithms) |
 | **ghostAgents.py** | Agents to control ghosts (can be ignored) |
 
-
-## How to run 
+## How to run
 
 **Options**
 
@@ -42,9 +44,9 @@ All project code can be found on [search directory](/search) and the respective 
 
 ```
 python3 pacman.py -l mediumMaze -p SearchAgent -a fn=depthFirstSearch
-``` 
-
+```
 
 ## Authors
+
 - [Carolina Albuquerque](https://github.com/cmalbuquerque) (80038)
 - [Manuel Cura](https://github.com/manuelcura) (76546)
