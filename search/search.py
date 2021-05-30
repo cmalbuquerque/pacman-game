@@ -73,18 +73,17 @@ def tinyMazeSearch(problem):
     w = Directions.WEST
     return  [s, s, w, s, w, w, s, w]
 
-def genericSearch(problem, structure):
+def genericGraphSearch(problem, structure):
     startNode = problem.getStartState()
     explored = set() # set of explored nodes
-
     # (Node, list of actions until to achieve the node)
     structure.push((startNode, list()))
+
+    if problem.isGoalState(startNode): # returns actions if is the goal
+        return list()
     
     while not structure.isEmpty():
-        currentNode, actions = structure.pop() # returns the last element of lis
-
-        if problem.isGoalState(currentNode): # returns actions if is the goal
-            return actions
+        currentNode, actions = structure.pop() # returns the element of structure
             
         if currentNode not in explored:
             explored.add(currentNode)
@@ -94,54 +93,55 @@ def genericSearch(problem, structure):
                     # copy actions list and append the new action to achieve the goal
                     nextAction = actions.copy() 
                     nextAction.append(action) 
+
+                    if problem.isGoalState(successorNode): # returns actions if is the goal
+                        return nextAction
+                        
                     # add the list of actions to achieve the current node
                     structure.push((successorNode, nextAction))
     return list()
 
+
 def depthFirstSearch(problem):
-
     structure = util.Stack() # stack because use LIFO implementation
-
-    return genericSearch(problem, structure)
+    return genericGraphSearch(problem, structure)
 
 
 
 def breadthFirstSearch(problem):
-
     structure = util.Queue() # queue because use FIFO implementation
+    return genericGraphSearch(problem, structure)
 
-    return genericSearch(problem, structure)
 
 def uniformCostSearch(problem):
-
     startNode = problem.getStartState()
     explored = set() # set of explored nodes
-
     structure = util.PriorityQueue() # queue because use FIFO implementation
 
-    # (Node, list of actions until to achieve the node)
+    # ((Node, list of actions until to achieve the node), cost)
     structure.push((startNode, list()), 0)
+
+    if problem.isGoalState(startNode): # returns actions if start node is the goal
+        return list()
     
     while not structure.isEmpty():
-        currentNode, actions = structure.pop() # returns the last element of lis
+        currentNode, actions = structure.pop() # returns the priority element
 
-        if problem.isGoalState(currentNode): # returns actions if is the goal
-            return actions
-            
         if currentNode not in explored:
             explored.add(currentNode)
 
             for successorNode, action, cost in problem.getSuccessors(currentNode):
-                #if successorNode not in explored:
-                    # copy actions list and append the new action to achieve the goal
-                    nextAction = actions.copy() 
-                    nextAction.append(action)
-                    pathCost = problem.getCostOfActions(nextAction)
-                    # add the list of actions to achieve the current node
-                    structure.update((successorNode, nextAction), pathCost)
-                #elif successorNode in explored:
-                #    structure.update((successorNode, nextAction))
-                    
+                nextAction = actions.copy() 
+                nextAction.append(action)
+
+                if problem.isGoalState(successorNode): # returns actions if is the goal
+                    return nextAction
+                
+                # get the cost of the actions' path
+                pathCost = problem.getCostOfActions(nextAction)
+                # add the list of actions to achieve the current node
+                structure.update((successorNode, nextAction), pathCost)
+                
     return list()
 
 def nullHeuristic(state, problem=None):
