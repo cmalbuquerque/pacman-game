@@ -114,6 +114,24 @@ def breadthFirstSearch(problem):
 
 
 def uniformCostSearch(problem):
+    return genericPrioriryGraphSearch(problem, nullHeuristic)
+
+def nullHeuristic(state, problem=None):
+    """
+    A heuristic function estimates the cost from the current state to the nearest
+    goal in the provided SearchProblem.  This heuristic is trivial.
+    """
+    return 0
+
+def aStarSearch(problem, heuristic=nullHeuristic):
+    # A heuristica é passada como argumento no comando de run... por defeito é a null que por sua vez
+    # é a que é usada no UCS
+    # Para correr: python3 pacman.py -l bigMaze -z .5 -p SearchAgent -a fn=astar,heuristic=manhattanHeuristic
+    # heuristicas possiveis: manhattanHeuristic, euclideanHeuristic
+    return genericPrioriryGraphSearch(problem, heuristic)
+
+
+def genericPrioriryGraphSearch(problem, heuristic=nullHeuristic):
     startNode = problem.getStartState()
     explored = set() # set of explored nodes
     structure = util.PriorityQueue() # queue because use FIFO implementation
@@ -138,23 +156,11 @@ def uniformCostSearch(problem):
                     return nextAction
                 
                 # get the cost of the actions' path
-                pathCost = problem.getCostOfActions(nextAction)
+                pathCost = problem.getCostOfActions(nextAction)+heuristic(successorNode, problem)
                 # add the list of actions to achieve the current node
                 structure.update((successorNode, nextAction), pathCost)
                 
     return list()
-
-def nullHeuristic(state, problem=None):
-    """
-    A heuristic function estimates the cost from the current state to the nearest
-    goal in the provided SearchProblem.  This heuristic is trivial.
-    """
-    return 0
-
-def aStarSearch(problem, heuristic=nullHeuristic):
-    """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
 
 
 # Abbreviations
