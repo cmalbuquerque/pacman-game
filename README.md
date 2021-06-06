@@ -7,11 +7,11 @@ Resolution of Pacman game in Python using AI approaches in order to allow the Pa
 1. [X] Finding a Fixed Food Dot using Depth First Search
 2. [X] Breadth First Search
 3. [X] Uniform Cost Search
-4. [ ] A* search
-5. [ ] Finding All the Corners
+4. [X] A* search
+5. [X] Finding All the Corners
 6. [ ] Corners Problem: Heuristic
 7. [ ] Eating All The Dots
-7. [ ] Suboptimal Search
+8. [ ] Suboptimal Search
 
 ## Structure
 
