@@ -9,9 +9,9 @@ Resolution of Pacman game in Python using AI approaches in order to allow the Pa
 3. [X] Uniform Cost Search
 4. [X] A* search
 5. [X] Finding All the Corners
-6. [ ] Corners Problem: Heuristic
-7. [ ] Eating All The Dots
-8. [ ] Suboptimal Search
+6. [X] Corners Problem: Heuristic
+7. [X] Eating All The Dots
+8. [X] Suboptimal Search
 
 ## Structure
 

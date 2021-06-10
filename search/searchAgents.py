@@ -35,6 +35,7 @@ Good luck and happy searching!
 """
 
 import time
+from typing import ValuesView
 
 from game import Actions
 from game import Agent
@@ -347,16 +348,20 @@ def cornersHeuristic(state, problem):
     """
     corners = problem.corners # These are the corner coordinates
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
-    currentNode = state[0]
-    unvisitedCorners = state[1]
     heuristic = 0
+    unvisited = list(set(state[1]))
+    currentNode = state[0]
 
-    heuristicsList = list()
-    for corner in unvisitedCorners:
-        distance = util.manhattanDistance(currentNode, corner)
-        heuristicsList.append(distance)
-    heuristic = min(heuristicsList) # consistent condition
+    while(len(unvisited)!=0):
+        distances = list()
+        for corner in unvisited:
+            distances.append((util.manhattanDistance(currentNode, corner), corner))
+        cost, nextNode = min(distances) # consistent condition
+        heuristic += cost
+        unvisited.remove(nextNode)
+
     return heuristic
+
 
 
 class AStarCornersAgent(SearchAgent):
