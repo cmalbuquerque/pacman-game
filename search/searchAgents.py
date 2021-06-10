@@ -458,11 +458,15 @@ def foodHeuristic(state, problem):
     uneaten = foodGrid.asList()
     heuristic = 0
 
-    heuristicsList = list()
-    for food in uneaten:
-        distance = util.manhattanDistance(position, food)
-        heuristicsList.append(distance)
-    heuristic = min(heuristicsList)
+    while(len(uneaten)!=0):
+        heuristicsList = list()
+        for food in uneaten:
+            distance = util.manhattanDistance(position, food)
+            heuristicsList.append((distance, food))
+        cost, nextFood = min(heuristicsList)
+        heuristic += cost
+        uneaten.remove(nextFood)
+
     return heuristic
 
 class ClosestDotSearchAgent(SearchAgent):
