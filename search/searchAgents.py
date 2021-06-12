@@ -357,6 +357,7 @@ def cornersHeuristic(state, problem):
         for corner in unvisited:
             distances.append((util.manhattanDistance(currentNode, corner), corner))
         cost, nextNode = min(distances) # consistent condition
+        currentNode = nextNode
         heuristic += cost
         unvisited.remove(nextNode)
 
@@ -464,6 +465,7 @@ def foodHeuristic(state, problem):
             distance = util.manhattanDistance(position, food)
             heuristicsList.append((distance, food))
         cost, nextFood = min(heuristicsList)
+        position = nextFood
         heuristic += cost
         uneaten.remove(nextFood)
 
@@ -496,7 +498,10 @@ class ClosestDotSearchAgent(SearchAgent):
         food = gameState.getFood()
         walls = gameState.getWalls()
         problem = AnyFoodSearchProblem(gameState)
-        return search.aStarSearch(problem)
+        #return search.aStarSearch(problem)
+        #return search.breadthFirstSearch(problem)
+        return search.depthFirstSearch(problem)
+        #return search.uniformCostSearch(problem)
         
 
 class AnyFoodSearchProblem(PositionSearchProblem):
